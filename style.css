@@ -8,6 +8,10 @@
     height: 40vh;
 }
 
+#timer {
+    width:100%;
+}
+
 div {
     height: 30vh;
     display: flex;

@@ -6,6 +6,9 @@ TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}"
 
 let answer_idx = 0;
 let is_handling_input = false;
+let interval = null;
+
+TIME = 2000;
 
 document.addEventListener('keydown', event => {
     if (event.code === 'Digit1') {
@@ -26,8 +29,32 @@ document.addEventListener('keydown', event => {
     }
 });
 
+
 window.onload = () => {
+    document.getElementById("config-timer").addEventListener('input', event => {
+        let elem = document.getElementById("config-timer");
+        let p = document.getElementById("config-timer-text");
+        p.innerText = elem.value+" secs";
+    });
     generate();
+}
+
+
+const start_timer = () => {
+    let bar = document.getElementById("timer");
+    bar.value = "100";
+    let cntr = 0;
+    let rem = 100.0;
+    let timer = () => {
+        if (rem <= 0) {
+            clearInterval(interval);
+            choice(null);
+        } else {
+            rem -= 100 / (TIME / 10);
+            bar.value = rem;
+        }
+    }
+    interval = setInterval(timer, 10);
 }
 
 const generate_prob = (prob, ans, prefix, postfix) => {
@@ -72,20 +99,35 @@ const generate = () => {
     } else if (tmp < 8) {
         generate_prob(RADIAN, TAN, "\\tan{(", ")}");
     }
+    TIME = document.getElementById("config-timer").value * 1000;
+    start_timer();
 }
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 const choice = async (n) => {
     if (is_handling_input) return;
     is_handling_input = true;
+    clearInterval(interval);
     let buttons = document.getElementsByClassName("ans-button");
-    if (n === answer_idx) {
+    if (n === null) {
+        buttons[answer_idx].classList.add("correct");
+        for (var i = 0; i < 4; i++) {
+            if (i == answer_idx) continue;
+            buttons[i].classList.add("wrong");
+        }
+        await sleep(100);
+        buttons[answer_idx].classList.remove("correct");
+        for (var i = 0; i < 4; i++) {
+            if (i == answer_idx) continue;
+            buttons[i].classList.remove("wrong");
+        }
+    } else if (n === answer_idx) {
         buttons[n].classList.add("correct");
-        await sleep(500);
+        await sleep(100);
         buttons[n].classList.remove("correct");
     } else {
         buttons[n].classList.add("wrong");
         buttons[answer_idx].classList.add("correct");
-        await sleep(500);
+        await sleep(100);
         buttons[n].classList.remove("wrong");
         buttons[answer_idx].classList.remove("correct");
     }
