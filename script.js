@@ -12,20 +12,16 @@ TIME = 2000;
 
 document.addEventListener('keydown', event => {
     if (event.code === 'Digit1') {
-        const button = document.getElementsByClassName('ans-button')[0];
-        button.click();
+        choice(0);
     }
     if (event.code === 'Digit2') {
-        const button = document.getElementsByClassName('ans-button')[1];
-        button.click();
+        choice(1);
     }
     if (event.code === 'Digit3') {
-        const button = document.getElementsByClassName('ans-button')[2];
-        button.click();
+        choice(2);
     }
     if (event.code === 'Digit4') {
-        const button = document.getElementsByClassName('ans-button')[3];
-        button.click();
+        choice(3);
     }
 });
 
@@ -34,7 +30,20 @@ window.onload = () => {
     document.getElementById("config-timer").addEventListener('input', event => {
         let elem = document.getElementById("config-timer");
         let p = document.getElementById("config-timer-text");
-        p.innerText = elem.value+" secs";
+        p.innerText = elem.value + " secs";
+    });
+    let elems = document.getElementsByClassName("ans-button");
+    elems[0].addEventListener('pointerdown', event => {
+        choice(0);
+    });
+    elems[1].addEventListener('pointerdown', event => {
+        choice(1);
+    });
+    elems[2].addEventListener('pointerdown', event => {
+        choice(2);
+    });
+    elems[3].addEventListener('pointerdown', event => {
+        choice(3);
     });
     generate();
 }
@@ -43,7 +52,6 @@ window.onload = () => {
 const start_timer = () => {
     let bar = document.getElementById("timer");
     bar.value = "100";
-    let cntr = 0;
     let rem = 100.0;
     let timer = () => {
         if (rem <= 0) {
@@ -63,7 +71,7 @@ const generate_prob = (prob, ans, prefix, postfix) => {
     problem.textContent = "\\[" + prefix + prob[i] + postfix + "\\]";
     let ans_idx = Math.floor(Math.random() * 4);
     answer_idx = ans_idx;
-    let buttons = document.getElementsByClassName("ans-button")
+    var buttons = document.getElementsByClassName("ans-button")
     buttons[ans_idx].textContent = "\\[" + ans[i] + "\\]";
     let used = [ans[i]];
 
