@@ -1,0 +1,28 @@
+.MathJax {
+    font-size: 5em !important;
+}
+
+
+#problem {
+    padding-top: 20vh;
+    height: 40vh;
+}
+
+div {
+    height: 30vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+button {
+    width: 100%;
+    margin: 5px;
+}
+
+.correct {
+    background: palegreen;
+}
+
+.wrong {
+    background: lightcoral;
+}
