@@ -7,6 +7,7 @@ TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}"
 let answer_idx = 0;
 let is_handling_input = false;
 let interval = null;
+let streak = 0;
 
 TIME = 2000;
 
@@ -107,6 +108,7 @@ const generate = () => {
     } else if (tmp < 8) {
         generate_prob(RADIAN, TAN, "\\tan{(", ")}");
     }
+    document.getElementById("streak").innerText = "Streak: " + streak;
     TIME = document.getElementById("config-timer").value * 1000;
     start_timer();
 }
@@ -117,25 +119,28 @@ const choice = async (n) => {
     clearInterval(interval);
     let buttons = document.getElementsByClassName("ans-button");
     if (n === null) {
+        streak = 0;
         buttons[answer_idx].classList.add("correct");
         for (var i = 0; i < 4; i++) {
             if (i == answer_idx) continue;
             buttons[i].classList.add("wrong");
         }
-        await sleep(100);
+        await sleep(500);
         buttons[answer_idx].classList.remove("correct");
         for (var i = 0; i < 4; i++) {
             if (i == answer_idx) continue;
             buttons[i].classList.remove("wrong");
         }
     } else if (n === answer_idx) {
+        streak++;
         buttons[n].classList.add("correct");
         await sleep(100);
         buttons[n].classList.remove("correct");
     } else {
+        streak = 0;
         buttons[n].classList.add("wrong");
         buttons[answer_idx].classList.add("correct");
-        await sleep(100);
+        await sleep(500);
         buttons[n].classList.remove("wrong");
         buttons[answer_idx].classList.remove("correct");
     }
