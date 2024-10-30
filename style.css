@@ -50,6 +50,10 @@ button {
     margin: 5px;
 }
 
+#config-timer {
+    width:100%;
+}
+
 .correct {
     background: palegreen;
 }
