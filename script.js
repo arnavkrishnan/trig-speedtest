@@ -1,15 +1,20 @@
-DEGREE = ["0^\\circ", "30^\\circ", "45^\\circ", "60^\\circ", "90^\\circ", "120^\\circ", "135^\\circ", "150^\\circ", "180^\\circ", "210^\\circ", "225^\\circ", "240^\\circ", "270^\\circ", "300^\\circ", "315^\\circ", "330^\\circ"];
-RADIAN = ["0", "\\frac{1}{6}\\pi", "\\frac{1}{4}\\pi", "\\frac{1}{3}\\pi", "\\frac{1}{2}\\pi", "\\frac{2}{3}\\pi", "\\frac{3}{4}\\pi", "\\frac{5}{6}\\pi", "\\pi", "\\frac{7}{6}\\pi", "\\frac{5}{4}\\pi", "\\frac{4}{3}\\pi", "\\frac{3}{2}\\pi", "\\frac{5}{3}\\pi", "\\frac{7}{4}\\pi", "\\frac{11}{6}\\pi"];
-SIN = ["0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0", "-\\frac{1}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{\\sqrt{3}}{2}", "-1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}"];
-COS = ["1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0", "-\\frac{1}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{\\sqrt{3}}{2}", "-1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}"];
-TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}"];
+const DEGREE = ["0^\\circ", "30^\\circ", "45^\\circ", "60^\\circ", "90^\\circ", "120^\\circ", "135^\\circ", "150^\\circ", "180^\\circ", "210^\\circ", "225^\\circ", "240^\\circ", "270^\\circ", "300^\\circ", "315^\\circ", "330^\\circ"];
+const RADIAN = ["0", "\\frac{1}{6}\\pi", "\\frac{1}{4}\\pi", "\\frac{1}{3}\\pi", "\\frac{1}{2}\\pi", "\\frac{2}{3}\\pi", "\\frac{3}{4}\\pi", "\\frac{5}{6}\\pi", "\\pi", "\\frac{7}{6}\\pi", "\\frac{5}{4}\\pi", "\\frac{4}{3}\\pi", "\\frac{3}{2}\\pi", "\\frac{5}{3}\\pi", "\\frac{7}{4}\\pi", "\\frac{11}{6}\\pi"];
+const SIN = ["0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0", "-\\frac{1}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{\\sqrt{3}}{2}", "-1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}"];
+const COS = ["1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0", "-\\frac{1}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{\\sqrt{3}}{2}", "-1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}"];
+const TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}"];
+
+// Inverse trigonometric values
+const INVERSE_SIN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\frac{\pi}{2}", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
+const INVERSE_COS = ["0", "\\frac{\pi}{3}", "\\frac{\pi}{4}", "\\frac{\pi}{6}", "0", "-\\frac{\pi}{6}", "-\\frac{\pi}{4}", "-\\frac{\pi}{3}", "0"];
+const INVERSE_TAN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\emptyset", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
 
 let answer_idx = 0;
 let is_handling_input = false;
 let interval = null;
 let streak = 0;
 
-TIME = 2000;
+let TIME = 2000;
 
 document.addEventListener('keydown', event => {
     if (event.code === 'Digit1') {
@@ -25,7 +30,6 @@ document.addEventListener('keydown', event => {
         choice(3);
     }
 });
-
 
 window.onload = () => {
     document.getElementById("config-timer").addEventListener('input', event => {
@@ -48,7 +52,6 @@ window.onload = () => {
     });
     generate();
 }
-
 
 const start_timer = () => {
     let bar = document.getElementById("timer");
@@ -90,29 +93,35 @@ const generate_prob = (prob, ans, prefix, postfix) => {
 }
 
 const generate = () => {
-    let tmp = Math.random() * 8;
-    if (tmp < 1) {
+    let tmp = Math.random() * 12;
+    if (tmp < 2) {
         generate_prob(DEGREE, RADIAN, "", "");
-    } else if (tmp < 2) {
-        generate_prob(RADIAN, DEGREE, "", "");
-    } else if (tmp < 3) {
-        generate_prob(DEGREE, SIN, "\\sin{(", ")}");
     } else if (tmp < 4) {
-        generate_prob(RADIAN, SIN, "\\sin{(", ")}");
+        generate_prob(RADIAN, DEGREE, "", "");
     } else if (tmp < 5) {
-        generate_prob(DEGREE, COS, "\\cos{(", ")}");
+        generate_prob(DEGREE, SIN, "\\sin{(", ")}");
     } else if (tmp < 6) {
-        generate_prob(RADIAN, COS, "\\cos{(", ")}");
+        generate_prob(RADIAN, SIN, "\\sin{(", ")}");
     } else if (tmp < 7) {
-        generate_prob(DEGREE, TAN, "\\tan{(", ")}");
+        generate_prob(DEGREE, COS, "\\cos{(", ")}");
     } else if (tmp < 8) {
+        generate_prob(RADIAN, COS, "\\cos{(", ")}");
+    } else if (tmp < 9) {
+        generate_prob(DEGREE, TAN, "\\tan{(", ")}");
+    } else if (tmp < 10) {
         generate_prob(RADIAN, TAN, "\\tan{(", ")}");
+    } else if (tmp < 11) {
+        generate_prob(DEGREE, INVERSE_SIN, "\\sin^{-1}{(", ")}");
+    } else if (tmp < 12) {
+        generate_prob(RADIAN, INVERSE_SIN, "\\sin^{-1}{(", ")}");
     }
     document.getElementById("streak").innerText = "Streak: " + streak;
     TIME = document.getElementById("config-timer").value * 1000;
     start_timer();
 }
+
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
 const choice = async (n) => {
     if (is_handling_input) return;
     is_handling_input = true;
