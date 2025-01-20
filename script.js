@@ -2,12 +2,12 @@ const DEGREE = ["0^\\circ", "30^\\circ", "45^\\circ", "60^\\circ", "90^\\circ", 
 const RADIAN = ["0", "\\frac{1}{6}\\pi", "\\frac{1}{4}\\pi", "\\frac{1}{3}\\pi", "\\frac{1}{2}\\pi", "\\frac{2}{3}\\pi", "\\frac{3}{4}\\pi", "\\frac{5}{6}\\pi", "\\pi", "\\frac{7}{6}\\pi", "\\frac{5}{4}\\pi", "\\frac{4}{3}\\pi", "\\frac{3}{2}\\pi", "\\frac{5}{3}\\pi", "\\frac{7}{4}\\pi", "\\frac{11}{6}\\pi"];
 const SIN = ["0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0", "-\\frac{1}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{\\sqrt{3}}{2}", "-1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}"];
 const COS = ["1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0", "-\\frac{1}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{\\sqrt{3}}{2}", "-1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}"];
-const TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}"];
+const TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\varnothing", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\varnothing", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}"];
 
 // Inverse trigonometric values
 const INVERSE_SIN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\frac{\pi}{2}", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
 const INVERSE_COS = ["0", "\\frac{\pi}{3}", "\\frac{\pi}{4}", "\\frac{\pi}{6}", "0", "-\\frac{\pi}{6}", "-\\frac{\pi}{4}", "-\\frac{\pi}{3}", "0"];
-const INVERSE_TAN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\emptyset", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
+const INVERSE_TAN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\varnothing", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
 
 let answer_idx = 0;
 let is_handling_input = false;
@@ -153,7 +153,6 @@ const choice = async (n) => {
         buttons[n].classList.remove("wrong");
         buttons[answer_idx].classList.remove("correct");
     }
-    console.log(n);
     generate();
     is_handling_input = false;
 }
