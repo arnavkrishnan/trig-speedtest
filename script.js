@@ -5,9 +5,9 @@ COS = ["1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0",
 TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}"];
 
 // Inverse trigonometric values
-INVERSE_SIN = ["0", "\\frac{\\pi}{6}", "\\frac{\\pi}{4}", "\\frac{\\pi}{3}", "\\frac{\\pi}{2}", "-\\frac{\\pi}{3}", "-\\frac{\\pi}{4}", "-\\frac{\\pi}{6}", "0"];
-INVERSE_COS = ["0", "\\frac{\\pi}{3}", "\\frac{\\pi}{4}", "\\frac{\\pi}{6}", "0", "-\\frac{\\pi}{6}", "-\\frac{\\pi}{4}", "-\\frac{\\pi}{3}", "0"];
-INVERSE_TAN = ["0", "\\frac{\\pi}{6}", "\\frac{\\pi}{4}", "\\frac{\\pi}{3}", "\\emptyset", "-\\frac{\\pi}{3}", "-\\frac{\\pi}{4}", "-\\frac{\\pi}{6}", "0"];
+INVERSE_SIN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\frac{\pi}{2}", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
+INVERSE_COS = ["0", "\\frac{\pi}{3}", "\\frac{\pi}{4}", "\\frac{\pi}{6}", "0", "-\\frac{\pi}{6}", "-\\frac{\pi}{4}", "-\\frac{\pi}{3}", "0"];
+INVERSE_TAN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\emptyset", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
 
 INVERSE_SIN_INPUT = ["0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "0"];
 INVERSE_COS_INPUT = ["1", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "0", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "-1"];
