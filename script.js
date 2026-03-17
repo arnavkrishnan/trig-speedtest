@@ -4,14 +4,12 @@ SIN = ["0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "1",
 COS = ["1", "\\frac{\\sqrt{3}}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{1}{2}", "0", "-\\frac{1}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{\\sqrt{3}}{2}", "-1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}"];
 TAN = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}"];
 
-// Inverse trigonometric values
 INVERSE_SIN = ["0", "\\frac{\\pi}{6}", "\\frac{\\pi}{4}", "\\frac{\\pi}{3}", "\\frac{\\pi}{2}", "-\\frac{\\pi}{3}", "-\\frac{\\pi}{4}", "-\\frac{\\pi}{6}", "0"];
-INVERSE_COS = ["0", "\\frac{\\pi}{3}", "\\frac{\\pi}{4}", "\\frac{\\pi}{6}", "0", "-\\frac{\\pi}{6}", "-\\frac{\\pi}{4}", "-\\frac{\\pi}{3}", "0"];
-INVERSE_TAN = ["0", "\\frac{\\pi}{6}", "\\frac{\\pi}{4}", "\\frac{\\pi}{3}", "\\emptyset", "-\\frac{\\pi}{3}", "-\\frac{\\pi}{4}", "-\\frac{\\pi}{6}", "0"];
-
 INVERSE_SIN_INPUT = ["0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "0"];
 INVERSE_COS_INPUT = ["1", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "0", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "-1"];
-INVERSE_TAN_INPUT = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\emptyset", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0"];
+INVERSE_COS = ["0", "\\frac{\\pi}{3}", "\\frac{\\pi}{4}", "\\frac{\\pi}{6}", "\\frac{\\pi}{2}", "\\frac{5\\pi}{6}", "\\frac{3\\pi}{4}", "\\frac{2\\pi}{3}", "\\pi"];
+INVERSE_TAN_INPUT = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}"];
+INVERSE_TAN = ["0", "\\frac{\\pi}{6}", "\\frac{\\pi}{4}", "\\frac{\\pi}{3}", "-\\frac{\\pi}{3}", "-\\frac{\\pi}{4}", "-\\frac{\\pi}{6}"];
 
 let answer_idx = 0;
 let is_handling_input = false;
@@ -21,20 +19,11 @@ let streak = 0;
 TIME = 2000;
 
 document.addEventListener('keydown', event => {
-    if (event.code === 'Digit1') {
-        choice(0);
-    }
-    if (event.code === 'Digit2') {
-        choice(1);
-    }
-    if (event.code === 'Digit3') {
-        choice(2);
-    }
-    if (event.code === 'Digit4') {
-        choice(3);
-    }
+    if (event.code === 'Digit1') { choice(0); }
+    if (event.code === 'Digit2') { choice(1); }
+    if (event.code === 'Digit3') { choice(2); }
+    if (event.code === 'Digit4') { choice(3); }
 });
-
 
 window.onload = () => {
     document.getElementById("config-timer").addEventListener('input', event => {
@@ -43,21 +32,12 @@ window.onload = () => {
         p.innerText = elem.value + " secs";
     });
     let elems = document.getElementsByClassName("ans-button");
-    elems[0].addEventListener('pointerdown', event => {
-        choice(0);
-    });
-    elems[1].addEventListener('pointerdown', event => {
-        choice(1);
-    });
-    elems[2].addEventListener('pointerdown', event => {
-        choice(2);
-    });
-    elems[3].addEventListener('pointerdown', event => {
-        choice(3);
-    });
+    elems[0].addEventListener('pointerdown', () => choice(0));
+    elems[1].addEventListener('pointerdown', () => choice(1));
+    elems[2].addEventListener('pointerdown', () => choice(2));
+    elems[3].addEventListener('pointerdown', () => choice(3));
     generate();
 }
-
 
 const start_timer = () => {
     let bar = document.getElementById("timer");
@@ -78,24 +58,36 @@ const start_timer = () => {
 const generate_prob = (prob, ans, prefix, postfix) => {
     let problem = document.getElementById("problem");
     let len = Math.min(prob.length, ans.length);
+
+    // Pick the correct answer index
     let i = Math.floor(Math.random() * len);
     problem.textContent = "\\[" + prefix + prob[i] + postfix + "\\]";
+
     let ans_idx = Math.floor(Math.random() * 4);
     answer_idx = ans_idx;
-    var buttons = document.getElementsByClassName("ans-button")
+
+    var buttons = document.getElementsByClassName("ans-button");
     buttons[ans_idx].textContent = "\\[" + ans[i] + "\\]";
+
+    // BUG FIX 4: track used answer *values* (not indices), and pick a fresh
+    // random index for each distractor — previously reused `i` which meant
+    // distractors could duplicate the correct answer or each other.
     let used = [ans[i]];
 
-    for (let idx = 0; idx < 4; idx++) {
-        if (idx == ans_idx) {
-            continue
-        }
-        while (used.indexOf(ans[i]) != -1) {
-            i = Math.floor(Math.random() * len);
-        }
-        used.push(ans[i]);
-        buttons[idx].textContent = "\\[" + ans[i] + "\\]";
+    for (let slot = 0; slot < 4; slot++) {
+        if (slot === ans_idx) continue;
+        let j;
+        let candidate;
+        let attempts = 0;
+        do {
+            j = Math.floor(Math.random() * len);
+            candidate = ans[j];
+            attempts++;
+        } while (used.indexOf(candidate) !== -1 && attempts < 100);
+        used.push(candidate);
+        buttons[slot].textContent = "\\[" + candidate + "\\]";
     }
+
     MathJax.typeset();
 }
 
@@ -128,7 +120,9 @@ const generate = () => {
     TIME = document.getElementById("config-timer").value * 1000;
     start_timer();
 }
+
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
 const choice = async (n) => {
     if (is_handling_input) return;
     is_handling_input = true;
@@ -160,7 +154,6 @@ const choice = async (n) => {
         buttons[n].classList.remove("wrong");
         buttons[answer_idx].classList.remove("correct");
     }
-    console.log(n);
     generate();
     is_handling_input = false;
 }
