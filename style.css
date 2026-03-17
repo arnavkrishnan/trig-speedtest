@@ -4,6 +4,12 @@
     text-align: center;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 #problem {
     padding-top: 10vh;
     height: 20vh;

@@ -9,6 +9,10 @@ const INVERSE_SIN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", 
 const INVERSE_COS = ["0", "\\frac{\pi}{3}", "\\frac{\pi}{4}", "\\frac{\pi}{6}", "0", "-\\frac{\pi}{6}", "-\\frac{\pi}{4}", "-\\frac{\pi}{3}", "0"];
 const INVERSE_TAN = ["0", "\\frac{\pi}{6}", "\\frac{\pi}{4}", "\\frac{\pi}{3}", "\\varnothing", "-\\frac{\pi}{3}", "-\\frac{\pi}{4}", "-\\frac{\pi}{6}", "0"];
 
+const INVERSE_SIN_INPUT = ["0", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "1", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "0"];
+const INVERSE_COS_INPUT = ["1", "\\frac{1}{2}", "\\frac{\\sqrt{2}}{2}", "\\frac{\\sqrt{3}}{2}", "0", "-\\frac{\\sqrt{3}}{2}", "-\\frac{\\sqrt{2}}{2}", "-\\frac{1}{2}", "-1"];
+const INVERSE_TAN_INPUT = ["0", "\\frac{\\sqrt{3}}{3}", "1", "\\sqrt{3}", "\\varnothing", "-\\sqrt{3}", "-1", "-\\frac{\\sqrt{3}}{3}", "0"];
+
 let answer_idx = 0;
 let is_handling_input = false;
 let interval = null;
@@ -71,7 +75,8 @@ const start_timer = () => {
 
 const generate_prob = (prob, ans, prefix, postfix) => {
     let problem = document.getElementById("problem");
-    let i = Math.floor(Math.random() * 16);
+    let len = Math.min(prob.length, ans.length);
+    let i = Math.floor(Math.random() * len);
     problem.textContent = "\\[" + prefix + prob[i] + postfix + "\\]";
     let ans_idx = Math.floor(Math.random() * 4);
     answer_idx = ans_idx;
@@ -84,7 +89,7 @@ const generate_prob = (prob, ans, prefix, postfix) => {
             continue
         }
         while (used.indexOf(ans[i]) != -1) {
-            i = Math.floor(Math.random() * 16);
+            i = Math.floor(Math.random() * len);
         }
         used.push(ans[i]);
         buttons[idx].textContent = "\\[" + ans[i] + "\\]";
@@ -93,7 +98,7 @@ const generate_prob = (prob, ans, prefix, postfix) => {
 }
 
 const generate = () => {
-    let tmp = Math.random() * 12;
+    let tmp = Math.random() * 16;
     if (tmp < 2) {
         generate_prob(DEGREE, RADIAN, "", "");
     } else if (tmp < 4) {
@@ -111,9 +116,17 @@ const generate = () => {
     } else if (tmp < 10) {
         generate_prob(RADIAN, TAN, "\\tan{(", ")}");
     } else if (tmp < 11) {
-        generate_prob(DEGREE, INVERSE_SIN, "\\sin^{-1}{(", ")}");
+        generate_prob(INVERSE_SIN_INPUT, INVERSE_SIN, "\\sin^{-1}{(", ")}");
     } else if (tmp < 12) {
-        generate_prob(RADIAN, INVERSE_SIN, "\\sin^{-1}{(", ")}");
+        generate_prob(INVERSE_SIN_INPUT, INVERSE_SIN, "\\sin^{-1}{(", ")}");
+    } else if (tmp < 13) {
+        generate_prob(INVERSE_COS_INPUT, INVERSE_COS, "\\cos^{-1}{(", ")}");
+    } else if (tmp < 14) {
+        generate_prob(INVERSE_COS_INPUT, INVERSE_COS, "\\cos^{-1}{(", ")}");
+    } else if (tmp < 15) {
+        generate_prob(INVERSE_TAN_INPUT, INVERSE_TAN, "\\tan^{-1}{(", ")}");
+    } else if (tmp < 16) {
+        generate_prob(INVERSE_TAN_INPUT, INVERSE_TAN, "\\tan^{-1}{(", ")}");
     }
     document.getElementById("streak").innerText = "Streak: " + streak;
     TIME = document.getElementById("config-timer").value * 1000;
